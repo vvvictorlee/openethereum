@@ -24,6 +24,7 @@ mod null_engine;
 mod validator_set;
 
 pub mod block_reward;
+pub mod congress;
 pub mod signer;
 
 pub use self::{
@@ -53,7 +54,7 @@ use snapshot::SnapshotComponents;
 use spec::CommonParams;
 use types::{
     header::{ExtendedHeader, Header},
-    transaction::{self, SignedTransaction, UnverifiedTransaction},
+    transaction::{self, SignedTransaction, UnverifiedTransaction,Transaction},
     BlockNumber,
 };
 use vm::{ActionValue, CallType, CreateContractAddress, EnvInfo, Schedule};
@@ -61,7 +62,7 @@ use vm::{ActionValue, CallType, CreateContractAddress, EnvInfo, Schedule};
 use block::ExecutedBlock;
 use bytes::Bytes;
 use crypto::publickey::Signature;
-use ethereum_types::{Address, H256, H64, U256};
+use ethereum_types::{Address, H256, H64, U256,H160};
 use machine::{self, AuxiliaryData, AuxiliaryRequest, Machine};
 use types::ancestry_action::AncestryAction;
 use unexpected::{Mismatch, OutOfBounds};
@@ -71,6 +72,12 @@ use unexpected::{Mismatch, OutOfBounds};
 pub const DEFAULT_BLOCKHASH_CONTRACT: &'static str = "73fffffffffffffffffffffffffffffffffffffffe33141561006a5760014303600035610100820755610100810715156100455760003561010061010083050761010001555b6201000081071515610064576000356101006201000083050761020001555b5061013e565b4360003512151561008457600060405260206040f361013d565b61010060003543031315156100a857610100600035075460605260206060f361013c565b6101006000350715156100c55762010000600035430313156100c8565b60005b156100ea576101006101006000350507610100015460805260206080f361013b565b620100006000350715156101095763010000006000354303131561010c565b60005b1561012f57610100620100006000350507610200015460a052602060a0f361013a565b600060c052602060c0f35b5b5b5b5b";
 /// The number of generations back that uncles can be.
 pub const MAX_UNCLE_AGE: usize = 6;
+
+lazy_static! {
+    /// System acocunt address
+    pub static ref SYSTEM_ACCOUNT: Address =
+        H160::from_slice("ffffFFFfFFffffffffffffffFfFFFfffFFFfFFfE".as_bytes());//.unwrap();
+}
 
 /// Voting errors.
 #[derive(Debug)]
@@ -119,6 +126,31 @@ pub enum EngineError {
     CliqueInvalidNonce(H64),
     /// The signer signed a block to recently
     CliqueTooRecentlySigned(Address),
+    /// Missing signature
+    CongressMissingSignature,
+    /// Missing vanity data
+    CongressMissingVanity,
+    /// The extra of header is invalid
+    CongressInvalidValidatorsExtra,
+    /// List of signers is invalid
+    CongressCheckpointInvalidValidators(usize),
+    /// Missing validator bytes on epoch block header
+    CongressCheckpointMismatchValidators,
+    /// Header is not continuous
+    CongressUnContinuousHeader,
+    /// CongressUnauthorizedValidator is returned if a header is signed by a non-authorized entity.
+    CongressUnauthorizedValidator,
+    /// CongressRecentlySigned is returned if a header is signed by an authorized entity
+    /// that already signed a header recently, thus is temporarily not allowed to.
+    CongressRecentlySigned,
+    /// The signer of header is different from author
+    CongressAuthorMismatch,
+    /// The validator bytes is not match with state
+    CongressInvalidValidatorBytes,
+    /// System tx mismatch
+    CongressSystemTxMismatch,
+    /// validator seal block too early
+    CongressFutureBlock,
     /// Custom
     Custom(String),
 }
@@ -135,6 +167,25 @@ impl fmt::Display for EngineError {
 															it needs to be bigger than zero and a divisible by 20",
                 len
             ),
+            CongressMissingSignature => format!("Extra data is missing signature"),
+            CongressCheckpointInvalidValidators(len) => format!(
+                "Checkpoint block list was of length: {} of checkpoint but
+															it needs to be bigger than zero and a divisible by 20",
+                len
+            ),
+            CongressUnContinuousHeader => format!("Can not find parent header"),
+            CongressUnauthorizedValidator => format!("Unauthorized validator"),
+            CongressRecentlySigned => format!("Invalid ValidatorBytes"),
+            CongressInvalidValidatorBytes => format!("Validator recent signed"),
+
+            CongressMissingVanity => format!("Missing vanity"),
+            CongressInvalidValidatorsExtra => format!("Invalid Validators Extra"),
+            CongressCheckpointMismatchValidators => format!("Checkpoint mismatch validators"),
+
+            CongressAuthorMismatch => format!("Author mismatch"),
+            CongressSystemTxMismatch => format!("SystemTx mismatch"),
+            CongressFutureBlock => format!("Receiving future block"),
+
             CliqueCheckpointNoSigner => format!("Checkpoint block list of signers was empty"),
             CliqueInvalidNonce(ref mis) => format!(
                 "Unexpected nonce {} expected {} or {}",

@@ -27,6 +27,7 @@ pub mod genesis;
 pub mod instant_seal;
 pub mod null_engine;
 pub mod params;
+pub mod congress;
 pub mod seal;
 pub mod spec;
 pub mod state;
@@ -45,6 +46,7 @@ pub use self::{
     instant_seal::{InstantSeal, InstantSealParams},
     null_engine::{NullEngine, NullEngineParams},
     params::Params,
+    congress::{Congress, CongressParams},
     seal::{AuthorityRoundSeal, Ethereum, Seal, TendermintSeal},
     spec::{ForkSpec, Spec},
     state::State,

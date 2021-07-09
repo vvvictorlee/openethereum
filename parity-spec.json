@@ -1,0 +1,60 @@
+{
+  "name": "GethTranslation",
+  "engine": {
+    "Ethash": {
+      "params": {
+        "minimumDifficulty": "0x20000",
+        "difficultyBoundDivisor": "0x800",
+        "durationLimit": "0xd",
+        "blockReward": "0x4563918244F40000",
+        "registrar": "0x81a4b044831c4f12ba601adb9274516939e9b8a2",
+        "homesteadTransition": 0,
+        "eip150Transition": 0,
+        "eip155Transition": 0,
+        "eip160Transition": 0,
+        "eip161abcTransition": 0,
+        "eip161dTransition": 0
+      }
+    }
+  },
+  "params": {
+    "accountStartNonce": "0x0",
+    "maximumExtraDataSize": "0x20",
+    "minGasLimit": "0x1388",
+    "networkID": 170,
+    "eip98Transition": 9223372036854775807,
+    "gasLimitBoundDivisor": "0x400"
+  },
+  "genesis": {
+    "seal": {
+      "ethereum": {
+        "nonce": "0x0",
+        "mixHash": "0x0000000000000000000000000000000000000000000000000000000000000000"
+      }
+    },
+    "difficulty": "0x1",
+    "author": "0x0000000000000000000000000000000000000000",
+    "timestamp": "0x607ede61",
+    "parentHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000598FeaB9ff6A090a7fAA9dF0F3B4df3F0c8D35FCC49926C4124cEe1cbA0Ea94Ea31a6c12318df9474a79c58CCf9d80353c02357F26D6f7b99fA9991e0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "gasLimit": "0x280de80"
+  },
+  "accounts": {
+    "000000000000000000000000000000000000F000": {
+      "balance": "0x0",
+      "nonce": "0x0"
+    },
+    "000000000000000000000000000000000000F001": {
+      "balance": "0x0",
+      "nonce": "0x0"
+    },
+    "000000000000000000000000000000000000F002": {
+      "balance": "0x0",
+      "nonce": "0x0"
+    },
+    "2E93b701030fE32251C336fCbe388C89aED34712": {
+      "balance": "0x52b7d2dcc80cd400000000",
+      "nonce": "0x0"
+    }
+  }
+}

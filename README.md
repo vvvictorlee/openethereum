@@ -1,3 +1,13 @@
+curl --data '{"jsonrpc":"2.0","method":"parity_addReservedPeer","params":["enode://81213a0e8edb787196eac1e5c1fe2bb06bf8da54a2da3d154ae7a8a4636ba8ff62e232878ceb40c401cb7baae43a83b5a5445a55b726b68610c200964eebd964@101.243.4.69:32668"],"id":0}' -H "Content-Type: application/json" -X POST http://127.0.0.1:9545
+
+curl --data '{"method":"parity_addReservedPeer","params":["enode://81213a0e8edb787196eac1e5c1fe2bb06bf8da54a2da3d154ae7a8a4636ba8ff62e232878ceb40c401cb7baae43a83b5a5445a55b726b68610c200964eebd964@192.168.1.102:32668"],"id":1,"jsonrpc":"2.0"}' -H "Content-Type: application/json" -X POST localhost:9545
+
+
+curl --data '{"method":"net_version","params":[],"id":1,"jsonrpc":"2.0"}' -H "Content-Type: application/json" -X POST localhost:9545
+
+curl -X POST --data '{"jsonrpc":"2.0","method":"net_version","params":[],"id":67}'  -H "Content-Type: application/json" localhost:8545
+
+
 # OpenEthereum
 
 Fast and feature-rich multi-network Ethereum client.

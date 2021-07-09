@@ -171,6 +171,11 @@ pub fn new_yolo3<'a, T: Into<SpecParams<'a>>>(params: T) -> Spec {
     )
 }
 
+/// Create HSC chain spec.
+pub fn new_hsc<'a, T: Into<SpecParams<'a>>>(params: T) -> Spec {
+    load(params.into(), include_bytes!("../../res/chainspec/hsc.json"))
+}
+
 // For tests
 
 /// Create a new Foundation Frontier-era chain spec as though it never changes to Homestead.

@@ -1,0 +1,28 @@
+[parity]
+chain = "hsc"
+base_path = "/tmp/hsc4"
+[network]
+warp = false
+port = 40300
+[rpc]
+apis = ["web3","eth","net","parity","parity_set","traces"]
+server_threads = 16
+interface = "0.0.0.0"
+cors=["all"]
+port = 9545
+[websockets]
+port = 9546
+interface = "0.0.0.0"
+max_connections = 1000
+apis = ["web3","eth","net","parity","pubsub","traces"]
+origins = ["all"]
+hosts = ["all"]
+
+
+
+
+[footprint]
+tracing = "on"
+pruning = "archive"
+fat_db = "on"
+cache_size_db = 12000

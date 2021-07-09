@@ -8,6 +8,9 @@ curl --data '{"method":"net_version","params":[],"id":1,"jsonrpc":"2.0"}' -H "Co
 curl -X POST --data '{"jsonrpc":"2.0","method":"net_version","params":[],"id":67}'  -H "Content-Type: application/json" localhost:8545
 
 
+RUST_LOG="debug" RUST_BACKTRACE=1 ./target/debug/openethereum --config ./hsc.toml
+
+
 # OpenEthereum
 
 Fast and feature-rich multi-network Ethereum client.

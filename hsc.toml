@@ -29,5 +29,5 @@ fat_db = "on"
 cache_size_db = 12000
 
 [misc]
-log_file = "/tmp/hsc4/logs/hsc.log"
+log_file = "/tmp/hsc.log"
 logging = "debug"

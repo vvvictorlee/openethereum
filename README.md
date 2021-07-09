@@ -1,6 +1,6 @@
 curl --data '{"jsonrpc":"2.0","method":"parity_addReservedPeer","params":["enode://81213a0e8edb787196eac1e5c1fe2bb06bf8da54a2da3d154ae7a8a4636ba8ff62e232878ceb40c401cb7baae43a83b5a5445a55b726b68610c200964eebd964@101.243.4.69:32668"],"id":0}' -H "Content-Type: application/json" -X POST http://127.0.0.1:9545
 
-curl --data '{"method":"parity_addReservedPeer","params":["enode://81213a0e8edb787196eac1e5c1fe2bb06bf8da54a2da3d154ae7a8a4636ba8ff62e232878ceb40c401cb7baae43a83b5a5445a55b726b68610c200964eebd964@192.168.1.102:32668"],"id":1,"jsonrpc":"2.0"}' -H "Content-Type: application/json" -X POST localhost:9545
+curl --data '{"method":"parity_addReservedPeer","params":["enode://b3fe1dc1c5ac04e6b6024de61939180ee0a3a1d54e329bb3366c8e8f3836e1334ee2488267fe73d6473bf841dca8efb15f43f6931e6822becb48d1f0bf401d48@35.73.127.28:32668"],"id":1,"jsonrpc":"2.0"}' -H "Content-Type: application/json" -X POST localhost:9545
 
 
 curl --data '{"method":"net_version","params":[],"id":1,"jsonrpc":"2.0"}' -H "Content-Type: application/json" -X POST localhost:9545
@@ -9,6 +9,9 @@ curl -X POST --data '{"jsonrpc":"2.0","method":"net_version","params":[],"id":67
 
 
 RUST_LOG="debug" RUST_BACKTRACE=1 ./target/debug/openethereum --config ./hsc.toml
+
+
+enode://b3fe1dc1c5ac04e6b6024de61939180ee0a3a1d54e329bb3366c8e8f3836e1334ee2488267fe73d6473bf841dca8efb15f43f6931e6822becb48d1f0bf401d48@35.73.127.28:32668
 
 
 # OpenEthereum

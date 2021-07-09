@@ -5,7 +5,7 @@ base_path = "/tmp/hsc4"
 warp = false
 port = 40300
 [rpc]
-apis = ["web3","eth","net","parity","parity_set","traces"]
+apis = ["web3", "eth", "pubsub", "net", "parity", "parity_set","parity_pubsub", "traces",   "parity_accounts", "secretstore"]
 server_threads = 16
 interface = "0.0.0.0"
 cors=["all"]
@@ -14,7 +14,7 @@ port = 9545
 port = 9546
 interface = "0.0.0.0"
 max_connections = 1000
-apis = ["web3","eth","net","parity","pubsub","traces"]
+apis = ["web3", "eth", "pubsub", "net", "parity", "parity_pubsub", "traces"]
 origins = ["all"]
 hosts = ["all"]
 

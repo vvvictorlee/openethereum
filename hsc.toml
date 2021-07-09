@@ -2,6 +2,7 @@
 chain = "hsc"
 base_path = "/tmp/hsc4"
 [network]
+nat="extip:35.74.226.168"
 warp = false
 port = 40300
 [rpc]
@@ -26,3 +27,7 @@ tracing = "on"
 pruning = "archive"
 fat_db = "on"
 cache_size_db = 12000
+
+[misc]
+log_file = "/tmp/hsc4/logs/hsc.log"
+logging = "debug"

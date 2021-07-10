@@ -30,4 +30,4 @@ cache_size_db = 12000
 
 [misc]
 log_file = "/tmp/hsc.log"
-logging = "debug"
+logging = "trace"

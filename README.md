@@ -2,6 +2,11 @@ curl --data '{"jsonrpc":"2.0","method":"parity_addReservedPeer","params":["enode
 
 curl --data '{"method":"parity_addReservedPeer","params":["enode://b3fe1dc1c5ac04e6b6024de61939180ee0a3a1d54e329bb3366c8e8f3836e1334ee2488267fe73d6473bf841dca8efb15f43f6931e6822becb48d1f0bf401d48@35.73.127.28:32668"],"id":1,"jsonrpc":"2.0"}' -H "Content-Type: application/json" -X POST localhost:9545
 
+curl --data '{"method":"parity_addReservedPeer","params":["enode://9d6220eac6cd9cf5c0c3c903b31ad0f9a25532afd215841ddc8d7f31c23d3b64525a20f82ce2dec394cac1416db57b23bc37b90c856cd21715660cdabfe2a4ab@35.74.226.168:32668"],"id":1,"jsonrpc":"2.0"}' -H "Content-Type: application/json" -X POST localhost:9545
+
+
+curl --data '{"method":"parity_addReservedPeer","params":["enode://9d6220eac6cd9cf5c0c3c903b31ad0f9a25532afd215841ddc8d7f31c23d3b64525a20f82ce2dec394cac1416db57b23bc37b90c856cd21715660cdabfe2a4ab@172.31.22.80:32668"],"id":1,"jsonrpc":"2.0"}' -H "Content-Type: application/json" -X POST localhost:9545
+
 
 curl --data '{"method":"net_version","params":[],"id":1,"jsonrpc":"2.0"}' -H "Content-Type: application/json" -X POST localhost:9545
 

@@ -282,7 +282,7 @@ fn hash_compute(light: &Light, full_size: usize, header_hash: &H256, nonce: u64)
             compress[i] = reduction;
         }
     }
-
+   
     let mix_hash = buf.compress_bytes;
 
     let value: H256 = {

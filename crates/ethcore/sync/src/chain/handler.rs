@@ -828,7 +828,8 @@ impl SyncHandler {
         tx_rlp: &Rlp,
     ) -> Result<(), DownloaderImportError> {
         for item in tx_rlp {
-            debug!(target: "sync", "on_peer_new_pooled_transaction_hashes {}:{}", item, peer_id);
+            debug!(target: "sync", "on_peer_new_pooled_transaction_hashes {}:{}", item, tx_rlp);
+            
             let hash = item
                 .as_val::<H256>()
                 .map_err(|_| DownloaderImportError::Invalid)?;

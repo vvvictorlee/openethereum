@@ -226,7 +226,7 @@ impl Engine<EthereumMachine> for Congress {
         }
         if header.number() == 1 {
             // skip first 7 init transaction
-            actual_system_txs = actual_system_txs[INIT_TX_NUM..].to_owned();
+            // actual_system_txs = actual_system_txs[INIT_TX_NUM..].to_owned();
         }
         for tx in actual_system_txs.iter() {
             if tx.action == Action::Call(util::PROPOSAL_CONTRACT.clone()) {

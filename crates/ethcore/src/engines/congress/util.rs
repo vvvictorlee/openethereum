@@ -96,7 +96,7 @@ pub fn recover_creator(header: &Header, chain_id: &u64) -> Result<Address, Error
     // modify header and hash it
     let unsigned_header = &mut header.clone();
     unsigned_header.set_extra_data(signed_data_slice.to_vec());
-    let msg = unsigned_header.bare_hash();//_with_id(chain_id);//hash_with_id
+    let msg = unsigned_header.hash();//_with_id(chain_id);//hash_with_id
 
     let pubkey = publickey::recover(&Signature::from(signature), &msg)?;
     let creator = publickey::public_to_address(&pubkey);

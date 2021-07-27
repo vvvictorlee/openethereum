@@ -8,6 +8,9 @@ curl --data '{"method":"parity_addReservedPeer","params":["enode://9d6220eac6cd9
 curl --data '{"method":"parity_addReservedPeer","params":["enode://9d6220eac6cd9cf5c0c3c903b31ad0f9a25532afd215841ddc8d7f31c23d3b64525a20f82ce2dec394cac1416db57b23bc37b90c856cd21715660cdabfe2a4ab@172.31.22.80:32668"],"id":1,"jsonrpc":"2.0"}' -H "Content-Type: application/json" -X POST localhost:9545
 
 
+curl --data '{"method":"eth_blockNumber","params":[],"id":1,"jsonrpc":"2.0"}' -H "Content-Type: application/json" -X POST localhost:9545
+
+
 curl --data '{"method":"net_version","params":[],"id":1,"jsonrpc":"2.0"}' -H "Content-Type: application/json" -X POST localhost:9545
 
 curl -X POST --data '{"jsonrpc":"2.0","method":"net_version","params":[],"id":67}'  -H "Content-Type: application/json" localhost:8545

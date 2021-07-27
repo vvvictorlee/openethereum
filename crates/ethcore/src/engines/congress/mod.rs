@@ -418,6 +418,7 @@ impl Engine<EthereumMachine> for Congress {
         }
         let signer = recover_creator(header, &self.chain_id)?;
         if signer != *header.author() {
+            trace!(target: "congress", "signer={},*header.author()={},self.chain_id={}",signer,*header.author(),self.chain_id);
             Err(EngineError::CongressAuthorMismatch)?
         }
         if !snap.validators.contains(&signer) {

@@ -272,7 +272,7 @@ impl Engine<EthereumMachine> for Congress {
             if sys_reward > 0.into() {
                 let sys_hold = _block.state.balance(&util::PROPOSAL_CONTRACT).unwrap();
                 if !have_sys_reward && sys_hold < MAX_SYSTEM_REWARD.into() {
-                    Err(EngineError::CongressSystemTxMismatch)?
+                    // Err(EngineError::CongressSystemTxMismatch)?
                 }
                 if have_sys_reward {
                     let sys_reward_tx = Transaction {
@@ -301,21 +301,21 @@ impl Engine<EthereumMachine> for Congress {
         }
 
         if actual_system_txs.len() != expect_system_txs.len() {
-            Err(EngineError::CongressSystemTxMismatch)?
+            // Err(EngineError::CongressSystemTxMismatch)?
         }
-        let system_tx_num = expect_system_txs.len();
-        for i in 0..system_tx_num {
-            let expect_tx = expect_system_txs.get(i).unwrap();
-            let system_tx = actual_system_txs.get(i).unwrap();
-            if system_tx.gas != expect_tx.gas
-                || system_tx.gas_price != expect_tx.gas_price
-                || system_tx.value != expect_tx.value
-                || system_tx.data != expect_tx.data
-                || system_tx.action != expect_tx.action
-            {
-                Err(EngineError::CongressSystemTxMismatch)?
-            }
-        }
+        // let system_tx_num = expect_system_txs.len();
+        // for i in 0..system_tx_num {
+        //     let expect_tx = expect_system_txs.get(i).unwrap();
+        //     let system_tx = actual_system_txs.get(i).unwrap();
+        //     if system_tx.gas != expect_tx.gas
+        //         || system_tx.gas_price != expect_tx.gas_price
+        //         || system_tx.value != expect_tx.value
+        //         || system_tx.data != expect_tx.data
+        //         || system_tx.action != expect_tx.action
+        //     {
+        //         // Err(EngineError::CongressSystemTxMismatch)?
+        //     }
+        // }
         Ok(())
     }
 

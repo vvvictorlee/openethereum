@@ -67,13 +67,12 @@ impl Snapshot {
         &mut self,
         client: Arc<dyn EngineClient>,
         header: &Header,
-        chain_id: &u64,
     ) -> Result<Snapshot, Error> {
         let num = header.number();
         if self.number + 1 != num {
             Err(EngineError::CongressUnContinuousHeader)?
         }
-        let creator = recover_creator(header, chain_id)?;
+        let creator = recover_creator(header)?;
         let mut snap = self.clone();
         snap.hash = header.hash();
         snap.number = num;
@@ -90,7 +89,7 @@ impl Snapshot {
             }
         }
         snap.recents.insert(num, creator);
-        if num > 0 && num % snap.epoch == (snap.validators.len() / 2) as u64 {
+        if num > 0 && num % snap.epoch == 0 {
             let checkpoint_header =
                 find_ancient_header(client, header, (snap.validators.len() / 2) as u64)?;
             let extra = checkpoint_header.extra_data();

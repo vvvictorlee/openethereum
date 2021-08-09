@@ -154,7 +154,7 @@ impl Congress {
                     }
                 }
                 for h in headers.iter().rev() {
-                    snap = snap.apply(c.clone(), h, &self.chain_id)?;
+                    snap = snap.apply(c.clone(), h)?;
                 }
                 snap_by_hash.insert(snap.hash.clone(), snap.clone());
                 if snap.number % CHECKPOINT_INTERVAL == 0 {
@@ -416,7 +416,7 @@ impl Engine<EthereumMachine> for Congress {
         {
             Err(EngineError::CongressFutureBlock)?
         }
-        let signer = recover_creator(header, &self.chain_id)?;
+        let signer = recover_creator(header)?;
         if signer != *header.author() {
             trace!(target: "congress", "signer={},*header.author()={},self.chain_id={}",signer,*header.author(),self.chain_id);
             Err(EngineError::CongressAuthorMismatch)?
@@ -472,6 +472,6 @@ impl Engine<EthereumMachine> for Congress {
     }
 
     fn executive_author(&self, header: &Header) -> Result<Address, Error> {
-        recover_creator(header, &self.chain_id)
+        recover_creator(header)
     }
 }

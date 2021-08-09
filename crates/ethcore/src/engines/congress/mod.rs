@@ -123,13 +123,13 @@ impl Congress {
                         break;
                     }
                     if block_number % CHECKPOINT_INTERVAL == 0 {
-                        // if let Some(new_snap) = Snapshot::load(
-                        //     Arc::clone(&self.db.read().as_ref().unwrap()),
-                        //     &block_hash,
-                        // ) {
-                        //     snap = new_snap;
-                        //     break;
-                        // }
+                        if let Some(new_snap) = Snapshot::load(
+                            Arc::clone(&self.db.read().as_ref().unwrap()),
+                            &block_hash,
+                        ) {
+                            snap = new_snap;
+                            break;
+                        }
                     }
                     if block_number == 0 {
                         match c.block_header(BlockId::Number(0)) {
@@ -140,7 +140,7 @@ impl Congress {
                                     ..(genesis.extra_data().len() - SIGNATURE_LENGTH)];
                                 let validators = snapshot::parse_validators(validator_bytes)?;
                                 snap = Snapshot::new(validators, 0, hash, self.epoch);
-                                // snap.store(Arc::clone(&self.db.write().as_ref().unwrap()));
+                                snap.store(Arc::clone(&self.db.write().as_ref().unwrap()));
                                 break;
                             }
                         }
@@ -158,7 +158,7 @@ impl Congress {
                 }
                 snap_by_hash.insert(snap.hash.clone(), snap.clone());
                 if snap.number % CHECKPOINT_INTERVAL == 0 {
-                    // snap.store(Arc::clone(&self.db.write().as_ref().unwrap()));
+                    snap.store(Arc::clone(&self.db.write().as_ref().unwrap()));
                 }
                 return Ok(snap);
             }

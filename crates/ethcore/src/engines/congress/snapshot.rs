@@ -53,6 +53,26 @@ impl Snapshot {
         }
     }
 
+    pub fn load(db_ins: Arc<dyn KeyValueDB>, hash: &H256) -> Option<Snapshot> {
+        if let Ok(b) = db_ins.get(db::COL_CONGRESS_SNAPSHOT, hash.as_bytes()) {
+            if b.is_none() {
+                return None;
+            }
+            if let Ok(snap) = serde_json::from_slice(&b.unwrap()) {
+                return Some(snap);
+            }
+            None
+        } else {
+            None
+        }
+    }
+
+    pub fn store(&self, db_ins: Arc<dyn KeyValueDB>) {
+        let value = serde_json::to_vec(&self).unwrap();
+        let mut tx = db_ins.transaction();
+        tx.put(db::COL_CONGRESS_SNAPSHOT, &self.hash.as_bytes(), &value);
+        db_ins.write(tx).unwrap();
+    }
 
     pub fn clone(&self) -> Snapshot {
         Snapshot {

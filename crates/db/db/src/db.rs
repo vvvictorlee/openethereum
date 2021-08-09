@@ -40,8 +40,10 @@ pub const COL_TRACE: Option<u32> = Some(4);
 pub const COL_ACCOUNT_BLOOM: Option<u32> = Some(5);
 /// Column for general information from the local node which can persist.
 pub const COL_NODE_INFO: Option<u32> = Some(6);
+/// Column for congress block state
+pub const COL_CONGRESS_SNAPSHOT: Option<u32> = Some(7);
 /// Number of columns in DB
-pub const NUM_COLUMNS: Option<u32> = Some(7);
+pub const NUM_COLUMNS: Option<u32> = Some(8);
 
 /// Modes for updating caches.
 #[derive(Clone, Copy)]

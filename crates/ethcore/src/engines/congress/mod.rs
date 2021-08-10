@@ -147,7 +147,7 @@ impl Congress {
                     }
                     if let Some(header) = c.block_header(BlockId::Hash(block_hash)) {
                         trace!(target: "congress", "block_header: {:?}",header);
-                        headers.push(header.decode(block_number)?);
+                        headers.push(header.decode(9223372036854775807)?);
                         block_number -= 1;
                         block_hash = header.parent_hash();
                     } else {

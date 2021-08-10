@@ -63,6 +63,7 @@ use block::ExecutedBlock;
 use bytes::Bytes;
 use crypto::publickey::Signature;
 use ethereum_types::{Address, H256, H64, U256,H160};
+use db::KeyValueDB;
 use machine::{self, AuxiliaryData, AuxiliaryRequest, Machine};
 use types::ancestry_action::AncestryAction;
 use unexpected::{Mismatch, OutOfBounds};
@@ -528,6 +529,9 @@ pub trait Engine<M: Machine>: Sync + Send {
 
     /// Add Client which can be used for sealing, potentially querying the state and sending messages.
     fn register_client(&self, _client: Weak<M::EngineClient>) {}
+
+    /// Add db if needed. Only for parlia so far.
+    fn register_db(&self, _db: Arc<dyn KeyValueDB>) {}
 
     /// Trigger next step of the consensus engine.
     fn step(&self) {}

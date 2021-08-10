@@ -22,7 +22,7 @@ use engines::{
 };
 use error::Error;
 use ethereum_types::{Address, H256};
-use kvdb::KeyValueDB;
+use db::KeyValueDB;
 use serde::{Deserialize, Serialize};
 use std::{
     collections::{BTreeMap, BTreeSet},

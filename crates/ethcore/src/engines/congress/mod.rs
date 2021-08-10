@@ -34,7 +34,7 @@ use error::{BlockError, Error};
 use ethabi::FunctionOutputDecoder;
 use ethereum_types::{Address, H256, U256, H160};
 use hash::KECCAK_EMPTY_LIST_RLP;
-use kvdb::KeyValueDB;
+use db::KeyValueDB;
 use lru_cache::LruCache;
 use machine::{Call, EthereumMachine};
 use parking_lot::RwLock;
@@ -124,7 +124,7 @@ impl Congress {
                     }
                     if block_number % CHECKPOINT_INTERVAL == 0 {
                         if let Some(new_snap) = Snapshot::load(
-                            Arc::clone(&self.db.read().as_ref().unwrap()),
+                            Arc::clone(self.db.read().as_ref().unwrap()),
                             &block_hash,
                         ) {
                             snap = new_snap;
@@ -140,7 +140,7 @@ impl Congress {
                                     ..(genesis.extra_data().len() - SIGNATURE_LENGTH)];
                                 let validators = snapshot::parse_validators(validator_bytes)?;
                                 snap = Snapshot::new(validators, 0, hash, self.epoch);
-                                snap.store(Arc::clone(&self.db.write().as_ref().unwrap()));
+                                snap.store(Arc::clone(self.db.write().as_ref().unwrap()));
                                 break;
                             }
                         }
@@ -159,7 +159,7 @@ impl Congress {
                 }
                 snap_by_hash.insert(snap.hash.clone(), snap.clone());
                 if snap.number % CHECKPOINT_INTERVAL == 0 {
-                    snap.store(Arc::clone(&self.db.write().as_ref().unwrap()));
+                    snap.store(Arc::clone(self.db.write().as_ref().unwrap()));
                 }
                 return Ok(snap);
             }
@@ -462,6 +462,10 @@ impl Engine<EthereumMachine> for Congress {
 
     fn register_client(&self, client: Weak<dyn EngineClient>) {
         *self.client.write() = Some(client.clone());
+    }
+
+    fn register_db(&self, db: Arc<dyn KeyValueDB>) {
+        *self.db.write() = Some(db.clone());
     }
 
     fn is_timestamp_valid(&self, header_timestamp: u64, parent_timestamp: u64) -> bool {

@@ -456,7 +456,7 @@ impl Engine<EthereumMachine> for Congress {
         let validators =
             snapshot::parse_validators(validator_bytes).map_err(|e| format!("{}", e))?;
         let snap = Snapshot::new(validators, 0, hash, self.epoch);
-        // snap.store(Arc::clone(&self.db.write().as_ref().unwrap()));
+        snap.store(Arc::clone(&self.db.write().as_ref().unwrap()));
         Ok(Vec::new())
     }
 

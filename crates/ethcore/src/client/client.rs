@@ -663,7 +663,7 @@ impl Importer {
         let mut state = block.state.drop().1;
 
         // t_nb 9.5 check epoch end signal, potentially generating a proof on the current
-        // state. Write transition into db.
+        // state. Write transition into db.              
         if let Some(pending) = pending {
             chain.insert_pending_transition(&mut batch, header.hash(), pending);
         }

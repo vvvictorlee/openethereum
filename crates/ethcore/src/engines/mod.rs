@@ -530,7 +530,7 @@ pub trait Engine<M: Machine>: Sync + Send {
     /// Add Client which can be used for sealing, potentially querying the state and sending messages.
     fn register_client(&self, _client: Weak<M::EngineClient>) {}
 
-    /// Add db if needed. Only for parlia so far.
+    /// Add db if needed. Only for congress so far.
     fn register_db(&self, _db: Arc<dyn KeyValueDB>) {}
 
     /// Trigger next step of the consensus engine.
